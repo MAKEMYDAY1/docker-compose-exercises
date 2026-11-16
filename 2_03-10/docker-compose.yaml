@@ -10,5 +10,12 @@ services:
     environment:
       - REQUEST_ORIGIN=http://localhost:5001
       - PORT=8080
+      - REDIS_HOST=redis
     ports:
       - 8080:8080
+    restart: unless-stopped
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    restart: unless-stopped
