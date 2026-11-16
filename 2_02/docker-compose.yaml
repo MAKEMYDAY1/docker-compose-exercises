@@ -1,0 +1,6 @@
+services:
+  web-service:
+    image: devopsdockeruh/simple-web-service:latest
+    command: bundle exec server
+    ports:
+      - 8000:8080
