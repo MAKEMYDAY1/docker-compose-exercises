@@ -1,17 +1,13 @@
 services:
   frontend:
     build: ./example-frontend
-    environment:
-      - REACT_APP_BACKEND_URL=http://localhost:8080/
-    ports:
-      - 5001:5001
   backend:
     build: ./example-backend
     depends_on:
       - db
       - redis
     environment:
-      - REQUEST_ORIGIN=http://localhost:5001
+      - REQUEST_ORIGIN=http://localhost:8000
       - PORT=8080
       - REDIS_HOST=redis
       - POSTGRES_HOST=db
@@ -19,13 +15,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DATABASE=postgres
       - POSTGRES_PORT=5432
-    ports:
-      - 8080:8080
     restart: unless-stopped
   redis:
     image: redis:alpine
-    ports:
-      - 6379:6379
     restart: unless-stopped
   db:
     image: postgres:18
@@ -33,8 +25,6 @@ services:
     shm_size: 128mb
     environment:
       POSTGRES_PASSWORD: postgres
-    ports:
-      - 5432:5432
     container_name: db_postgresql
     volumes:
       - ./database:/var/lib/postgresql
